@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col">
     <UTextarea v-model="lists"/>
     <UButton @click="onFetchTasks">Получить задачи</UButton>
     <span>{{ listIds }}</span>
@@ -16,11 +16,12 @@ const lists = ref<string>('')
 const tasks = ref<ITask[]>([])
 const api = useClickUp()
 
-const listIds = computed(() => {
-  const regexp = /\/(?:li\/|l\/6-)(\d+)/
-
-  return lists.value.split('\n').map((line) => line.match(regexp)?.[1]).filter(Boolean)
-})
+const listIds = computed(() =>
+  lists.value
+    .split('\n')
+    .map((line) => line.match(/\/(?:li\/|l\/6-)(\d+)/)?.[1])
+    .filter(Boolean)
+)
 
 function onFetchTasks() {
   listIds.value.forEach(async (listId) => {
