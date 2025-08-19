@@ -20,6 +20,11 @@
       </UButton>
     </div>
 
+    <div class="flex gap-1 grow">
+      <FixedTaskStatuses v-model="fromStatus" class="grow"/>
+      <FixedTaskStatuses v-model="toStatus" class="grow"/>
+    </div>
+
     <span>{{ listIds }}</span>
     <span>{{ tasks.length }}</span>
   </div>
@@ -28,10 +33,13 @@
 <script setup lang="ts">
 import { useClickUp } from "~/composables/apiClient/useClickUp";
 import type { ITask } from "~/composables/apiClient/types/Task/ITask";
+import FixedTaskStatuses from "~/components/FixedTaskStatuses.vue";
 
 const lists = ref<string>('')
 
 const tasks = ref<ITask[]>([])
+const fromStatus = ref<string>('approved')
+const toStatus = ref<string>('stage')
 const api = useClickUp()
 
 const listIds = computed(() =>
