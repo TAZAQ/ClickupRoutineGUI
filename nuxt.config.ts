@@ -12,4 +12,7 @@ export default defineNuxtConfig({
       title: 'ClickUp Routine GUI',
     },
   },
+  runtimeConfig: {
+    clickupApiKey: process.env.NUXT_CLICKUP_API_KEY,
+  },
 })
