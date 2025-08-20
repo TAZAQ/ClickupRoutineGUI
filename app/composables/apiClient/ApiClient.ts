@@ -1,3 +1,5 @@
+import type { ISpaceTreeResponse } from "~/composables/apiClient/types/spaceTree/ISpaceTreeResponse";
+
 interface IApiResponse<DataType = unknown> {
   success: boolean
   data: DataType
@@ -13,16 +15,16 @@ class ApiClient {
   constructor(private readonly baseUrl: string = '/api/clickup') {}
 
   // Задачи (Tasks)
-  async getTasks(listId: string, query?: Record<string, string>) {
+  getTasks(listId: string, query?: Record<string, string>) {
     return this.handleRequest(`list/${listId}/task`, { query })
   }
 
-  async getTask(taskId: string) {
+  getTask(taskId: string) {
     return this.handleRequest(`task/${taskId}`)
   }
 
-  async getSpace() {
-    return this.handleRequest(`space-tree`)
+  getSpace() {
+    return this.handleRequest(`space-tree`) as Promise<ISpaceTreeResponse>
   }
 
   private async handleRequest<T = unknown>(
