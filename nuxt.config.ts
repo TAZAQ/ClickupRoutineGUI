@@ -17,6 +17,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     clickupApiKey: process.env.NUXT_CLICKUP_API_KEY,
+    clickupSpaceId: process.env.NUXT_CLICKUP_SPACE_ID,
   },
   vite: {
     plugins: [

@@ -21,6 +21,9 @@ class ApiClient {
     return this.handleRequest(`task/${taskId}`)
   }
 
+  async getSpace() {
+    return this.handleRequest(`space-tree`)
+  }
 
   private async handleRequest<T = unknown>(
     endpoint: string,

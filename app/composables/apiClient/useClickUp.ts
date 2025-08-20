@@ -23,6 +23,8 @@ export const useClickUp = () => {
     }
   }
 
+  // space
+  const getSpace = () => handleRequest(apiClient.getSpace())
 
   // Задачи
   const getTasks = (listId: string, query?: Record<string, string>) =>
@@ -39,5 +41,6 @@ export const useClickUp = () => {
     // Задачи
     getTasks,
     getTask,
+    getSpace,
   }
 }

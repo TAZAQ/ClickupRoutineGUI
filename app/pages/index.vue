@@ -32,6 +32,7 @@ import FixedTaskStatuses from "~/components/FixedTaskStatuses.vue";
 import TaskIdsField from "~/components/TaskIdsField.vue";
 import { type ITaskStatusStep, useTaskStatuses } from "~/composables/useTaskStatuses";
 import { useTasksStore } from "~/composables/useTasksStore";
+import { useSpace } from "~/composables/useSpace";
 
 const lists = ref<string>('')
 const fromStatus = ref<string>('approved')
@@ -46,6 +47,12 @@ const listIds = computed(() =>
     .map((line) => line.match(/\/(?:li\/|l\/6-)(\d+)/)?.[1])
     .filter(Boolean)
 )
+
+const { fetchSpace } = useSpace()
+
+onMounted(() => {
+  fetchSpace()
+})
 
 function onFetchTasks () {
   fetchTasks(listIds.value as string[])
