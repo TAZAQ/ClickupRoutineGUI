@@ -8,10 +8,10 @@
     </UTextarea>
 
     <div class="flex gap-1">
-      <UButton :loading="loading" :disabled="loading" @click="onFetchTasks">Получить задачи</UButton>
+      <UButton :loading="tasksLoading" :disabled="tasksLoading" @click="onFetchTasks">Получить задачи</UButton>
     </div>
 
-    <TaskIdsField :task-ids="taskIds"/>
+    <TaskIdsField :task-ids="tasksIds"/>
 
     <div class="flex gap-1 grow">
       <FixedTaskStatuses v-model="fromStatus" class="grow"/>
@@ -28,18 +28,15 @@
 </template>
 
 <script setup lang="ts">
-import { useClickUp } from "~/composables/apiClient/useClickUp";
-import type { ITask } from "~/composables/apiClient/types/Task/ITask";
 import FixedTaskStatuses from "~/components/FixedTaskStatuses.vue";
 import TaskIdsField from "~/components/TaskIdsField.vue";
 import { type ITaskStatusStep, useTaskStatuses } from "~/composables/useTaskStatuses";
+import { useTasksStore } from "~/composables/useTasksStore";
 
 const lists = ref<string>('')
-
-const tasks = ref<ITask[]>([])
 const fromStatus = ref<string>('approved')
 const toStatus = ref<string>('stage')
-const { loading, getTasks } = useClickUp()
+const { tasks, tasksIds, tasksLoading, fetchTasks } = useTasksStore()
 
 const { defaultSteps, setTaskStatusesSteps } = useTaskStatuses()
 
@@ -50,16 +47,8 @@ const listIds = computed(() =>
     .filter(Boolean)
 )
 
-const taskIds = computed(() =>
-  tasks.value.map((task) => task.id).join('|')
-)
-
-function onFetchTasks() {
-  tasks.value = []
-  listIds.value.forEach(async (listId) => {
-    const response = await getTasks(listId as string)
-    tasks.value.push(...response.data.tasks)
-  })
+function onFetchTasks () {
+  fetchTasks(listIds.value as string[])
 }
 
 function onSetStatuses (step: ITaskStatusStep) {

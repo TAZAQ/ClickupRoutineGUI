@@ -2,7 +2,7 @@
   <div class="flex gap-1">
     <UInput
       class="grow"
-      :value="taskIds"
+      :value="taskIdsText"
       readonly
       placeholder="Task IDs будут отображены здесь..."
     />
@@ -18,12 +18,14 @@
 </template>
 
 <script setup lang="ts">
-const { taskIds } = defineProps<{ taskIds: string }>()
+const { taskIds } = defineProps<{ taskIds: string[] }>()
 const toast = useToast()
+
+const taskIdsText = computed(() => taskIds.join('|'))
 
 async function copyToClipboard() {
   try {
-    await navigator.clipboard.writeText(taskIds)
+    await navigator.clipboard.writeText(taskIdsText.value)
     toast.add({ title: 'Скопировано', duration: 1000 })
   } catch (err) {
     console.error('Ошибка копирования в буфер обмена:', err)
