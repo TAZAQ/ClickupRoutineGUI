@@ -7,9 +7,19 @@ import type { NavigationMenuItem } from "#ui/components/NavigationMenu.vue";
 
 const items = ref<NavigationMenuItem[]>([
   {
-    label: 'index',
-    icon: 'i-lucide-book-open',
+    label: 'Получалка',
+    icon: 'i-lucide-list-check',
     to: '/',
+  },
+  {
+    label: 'Переноска',
+    icon: 'i-lucide-arrow-big-right',
+    to: '/tasks-move',
+  },
+  {
+    label: 'Пиздаболка',
+    icon: 'i-lucide-message-circle-more',
+    to: '/tasks-comments',
   },
 ])
 </script>
