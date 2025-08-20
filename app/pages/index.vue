@@ -1,7 +1,15 @@
 <template>
-  <div class="flex flex-col">
-    <UTextarea v-model="lists"/>
-    <UButton :loading="loading" :disabled="loading" @click="onFetchTasks">Получить задачи</UButton>
+  <div class="flex flex-col gap-1">
+    <UTextarea v-model="lists" placeholder="Новый list с новой строки">
+      <template #trailing>
+        <span>{{ listIds }}</span>
+        <span>{{ tasks.length }}</span>
+      </template>
+    </UTextarea>
+
+    <div class="flex gap-1">
+      <UButton :loading="loading" :disabled="loading" @click="onFetchTasks">Получить задачи</UButton>
+    </div>
 
     <TaskIdsField :task-ids="taskIds"/>
 
@@ -16,9 +24,6 @@
         @click="onSetStatuses(step)"
       >{{ step.name }}</UButton>
     </div>
-
-    <span>{{ listIds }}</span>
-    <span>{{ tasks.length }}</span>
   </div>
 </template>
 
@@ -50,6 +55,7 @@ const taskIds = computed(() =>
 )
 
 function onFetchTasks() {
+  tasks.value = []
   listIds.value.forEach(async (listId) => {
     const response = await getTasks(listId as string)
     tasks.value.push(...response.data.tasks)

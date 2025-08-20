@@ -19,10 +19,12 @@
 
 <script setup lang="ts">
 const { taskIds } = defineProps<{ taskIds: string }>()
+const toast = useToast()
 
 async function copyToClipboard() {
   try {
     await navigator.clipboard.writeText(taskIds)
+    toast.add({ title: 'Скопировано', duration: 1000 })
   } catch (err) {
     console.error('Ошибка копирования в буфер обмена:', err)
   }
