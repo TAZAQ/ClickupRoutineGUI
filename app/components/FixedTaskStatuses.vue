@@ -7,11 +7,11 @@
     placeholder="Выберите статус"
   >
     <template #item-leading="{ item }: { item: ITaskStatus }">
-      <div class="rounded" :style="`background-color: ${item.color}; width: 12px; height: 12px;`" />
+      <RoundedSquare :color="item.color" />
     </template>
 
     <template #leading>
-      <div class="rounded" :style="`background-color: ${currentStatus?.color}; width: 12px; height: 12px;`" />
+      <RoundedSquare :color="currentStatus?.color"/>
     </template>
   </USelect>
 </template>
@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import type { ITaskStatus } from "~/composables/apiClient/types/Task/ITaskStatus";
 import { useTaskStatuses } from "~/composables/useTaskStatuses";
+import RoundedSquare from "~/components/shared/RoundedSquare.vue";
 
 const selectedStatus = defineModel<string>()
 

@@ -16,6 +16,8 @@
       </div>
 
       <TaskIdsField :task-ids="tasksIds"/>
+
+      <TasksList/>
     </div>
   </div>
 </template>
