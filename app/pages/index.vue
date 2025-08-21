@@ -28,18 +28,18 @@ import { useTasksStore } from "~/composables/useTasksStore";
 import { useSpaceTree } from "~/composables/spaceTree/useSpaceTree";
 
 const {
-  tasksLoading,
-  fetchTasks,
-  filters,
-} = useTasksStore()
-
-const {
   fetchSpace,
   spaceTree,
   spaceTreeSelected,
   selectNode,
   listIds,
 } = useSpaceTree()
+
+const {
+  tasksLoading,
+  fetchTasks,
+  filters,
+} = useTasksStore()
 
 onMounted(() => {
   fetchSpace()

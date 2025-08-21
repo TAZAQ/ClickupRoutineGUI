@@ -3,14 +3,16 @@ import type { ISpaceTreeResponse } from "~/composables/apiClient/types/spaceTree
 import { spaceTreeAdapter } from "~/composables/spaceTree/spaceTreeAdapter";
 import type { ISpaceTreeNode } from "~/composables/spaceTree/types/ISpaceTreeNode";
 
-export const useSpaceTree = () => {
-  const spaceTree = ref<ISpaceTreeNode[]>([])
-  const spaceTreeSelected = ref<ISpaceTreeNode[]>([])
-  const listIds = computed(() => spaceTreeSelected.value.map((item) => item.id))
+const spaceTree = ref<ISpaceTreeNode[]>([])
+const spaceTreeSelected = ref<ISpaceTreeNode[]>([])
+const listIds = computed(() => spaceTreeSelected.value.map((item) => item.id))
 
+export const useSpaceTree = () => {
   const { getSpace } = useClickUp()
 
   async function fetchSpace () {
+    if (spaceTree.value.length) { return }
+
     spaceTree.value = await getSpace()
       .then((response) => response.data)
       .then((data: ISpaceTreeResponse['data']) => { return spaceTreeAdapter.toClient(data) })
