@@ -1,7 +1,7 @@
 <template>
   <UApp>
     <UContainer class="flex flex-col gap-4">
-      <Menu/>
+      <MainMenu/>
       <NuxtPage />
     </UContainer>
   </UApp>
