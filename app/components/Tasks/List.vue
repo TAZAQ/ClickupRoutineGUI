@@ -7,12 +7,19 @@
       </div>
       <TasksListItem v-for="task in tasksGroupedByStatus[statusKey]" :key="task.id" :task="task"/>
     </div>
+    <div v-if="tasksLoading">
+      Загрузка...
+    </div>
+    <div v-if="!tasksLoading && !tasks.length">
+      Ничего нет.
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 
-const { tasks } = useTasksStore()
+const { tasks, tasksLoading } = useTasksStore()
+
 const tasksGroupedByStatus =
   computed(() => Object.groupBy(
     tasks.value,

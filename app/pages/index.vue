@@ -12,8 +12,8 @@
 
     <div class="flex flex-col grow gap-1">
       <div class="flex gap-1 items-center">
-        <FixedTaskStatuses v-model="filters.status"/>
-        <UButton :loading="tasksLoading" :disabled="tasksLoading" @click="onFetchTasks">
+        <FixedTaskStatuses v-model="filters.status" class="grow"/>
+        <UButton :loading="tasksLoading" :disabled="tasksLoading || !listIds.length" @click="onFetchTasks">
           Получить задачи
         </UButton>
       </div>
