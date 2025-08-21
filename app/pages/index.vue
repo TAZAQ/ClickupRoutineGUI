@@ -11,11 +11,12 @@
     />
 
     <div class="flex flex-col grow gap-1">
-      <div class="flex gap-1">
-        <UButton :loading="tasksLoading" :disabled="tasksLoading" @click="onFetchTasks">Получить задачи</UButton>
+      <div class="flex gap-1 items-center">
+        <FixedTaskStatuses v-model="filters.status"/>
+        <UButton :loading="tasksLoading" :disabled="tasksLoading" @click="onFetchTasks">
+          Получить задачи
+        </UButton>
       </div>
-
-      <TaskIdsField :task-ids="tasksIds"/>
 
       <TasksList/>
     </div>
@@ -23,14 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import TaskIdsField from "~/components/TaskIdsField.vue";
 import { useTasksStore } from "~/composables/useTasksStore";
 import { useSpaceTree } from "~/composables/spaceTree/useSpaceTree";
 
 const {
-  tasksIds,
   tasksLoading,
   fetchTasks,
+  filters,
 } = useTasksStore()
 
 const {
