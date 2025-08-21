@@ -5,6 +5,8 @@ import type { ISpaceTreeNode } from "~/composables/spaceTree/types/ISpaceTreeNod
 
 export const useSpaceTree = () => {
   const spaceTree = ref<ISpaceTreeNode[]>([])
+  const spaceTreeSelected = ref<ISpaceTreeNode[]>([])
+  const listIds = computed(() => spaceTreeSelected.value.map((item) => item.id))
 
   const { getSpace } = useClickUp()
 
@@ -14,8 +16,15 @@ export const useSpaceTree = () => {
       .then((data: ISpaceTreeResponse['data']) => { return spaceTreeAdapter.toClient(data) })
   }
 
+  function selectNode (selected: ISpaceTreeNode[]) {
+    spaceTreeSelected.value = selected.filter((item) => !item.children)
+  }
+
   return {
     spaceTree,
+    spaceTreeSelected,
     fetchSpace,
+    selectNode,
+    listIds,
   }
 }
