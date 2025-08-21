@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const params = await extractEventParams(event)
 
   try {
-    const clickupUrl = `https://api.clickup.com/api/v2/${url}`
+    const clickupUrl = `https://api.clickup.com/api/v2/${params.urlPart}`
     const data = await $fetch(clickupUrl, params)
 
     return { success: true, data }
